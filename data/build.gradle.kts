@@ -77,3 +77,7 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.7.4")
 }
+
+kapt {
+    correctErrorTypes = true
+}

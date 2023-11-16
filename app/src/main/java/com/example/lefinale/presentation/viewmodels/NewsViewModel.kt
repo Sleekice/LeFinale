@@ -1,6 +1,12 @@
+package com.example.lefinale.presentation.viewmodels
+
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.model.remote.africanews.AfricanNewsDataModel
+import com.example.data.model.remote.africanews.ArticleModel
 import com.example.data.model.remote.bbcnews.BBCNewsDataModel
 import com.example.data.model.remote.businessinsider.BusinessInsiderDataModel
 import com.example.data.model.remote.donaldtrumpnews.DonaldTrumpDataModel
@@ -14,8 +20,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-     val newsRepository: NewsRepository
+    val newsRepository: NewsRepository
 ) : ViewModel() {
+
+
+
+    private val _selectedArticle = MutableStateFlow<ArticleModel?>(null)
+    val selectedArticle: StateFlow<ArticleModel?> = _selectedArticle
+    // Function to set the selected article
+    fun setSelectedArticle(article: ArticleModel) {
+        _selectedArticle.value = article
+    }
+
+    // Function to clear the selected article
+    fun clearSelectedArticle() {
+        _selectedArticle.value = null
+    }
+
 
     private val _bbcNewsData = MutableStateFlow<BBCNewsDataModel?>(null)
     val bbcNewsData: StateFlow<BBCNewsDataModel?> = _bbcNewsData
@@ -28,6 +49,14 @@ class NewsViewModel @Inject constructor(
 
     private val _donaldTrumpData = MutableStateFlow<DonaldTrumpDataModel?>(null)
     val donaldTrumpData: StateFlow<DonaldTrumpDataModel?> = _donaldTrumpData
+
+    //Handle Circular Progress Indicator.
+    private val _businessInsiderLoading = mutableStateOf(false)
+    val businessInsiderLoading: State<Boolean> = _businessInsiderLoading
+
+
+
+
 
     fun getAllBBCNews(query: String) {
         viewModelScope.launch {
@@ -60,6 +89,10 @@ class NewsViewModel @Inject constructor(
     }
 
     fun getAllBusinessInsiderNews(query: String) {
+
+        _businessInsiderLoading.value = true
+
+
         viewModelScope.launch {
             try {
                 val response = newsRepository.getAllBusinessInsiderNews(query)
@@ -70,6 +103,10 @@ class NewsViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 // Handle exception
+            }
+            finally {
+                // Set loading state to false when data fetching is completed (either success or failure)
+                _businessInsiderLoading.value = false
             }
         }
     }
@@ -88,4 +125,8 @@ class NewsViewModel @Inject constructor(
             }
         }
     }
+
+
+    //Detail Page ----->
+
 }

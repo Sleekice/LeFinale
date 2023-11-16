@@ -11,16 +11,16 @@ import retrofit2.Response
 interface NewsRepository {
 
     // All BBC News
-    suspend fun getAllBBCNews(query: String = ApiDetails.BBCNEWS_ENDPOINT): Response<BBCNewsDataModel>
+    suspend fun getAllBBCNews(query: String = ApiDetails.BBCNEWS): Response<BBCNewsDataModel>
 
     // All News on Africa
-    suspend fun getAllAfricanNews(query: String = ApiDetails.AFRICANEWS_ENDPOINT): Response<AfricanNewsDataModel>
+    suspend fun getAllAfricanNews(query: String = ApiDetails.AFRICANEWS): Response<AfricanNewsDataModel>
 
     // All Business Insider News
-    suspend fun getAllBusinessInsiderNews(query: String = ApiDetails.BUSINESSINSIDER_ENDPOINT): Response<BusinessInsiderDataModel>
+    suspend fun getAllBusinessInsiderNews(query: String = ApiDetails.BUSINESSINSIDER): Response<BusinessInsiderDataModel>
 
     // All Donald Trump News
-    suspend fun getAllDonaldTrumpNews(query: String = ApiDetails.DONALDTRUMP_ENDPOINT): Response<DonaldTrumpDataModel>
+    suspend fun getAllDonaldTrumpNews(query: String = ApiDetails.DONALDTRUMP): Response<DonaldTrumpDataModel>
 
 }
 

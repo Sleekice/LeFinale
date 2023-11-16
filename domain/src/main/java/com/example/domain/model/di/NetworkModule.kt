@@ -1,4 +1,4 @@
-package com.example.lefinale.presentation.viewmodels
+package com.example.domain.model.di
 
 import com.example.data.model.remote.ApiDetails
 import com.example.data.model.remote.NewsService
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module // defines the imports for HILT -> What needs to be injected
 @InstallIn(SingletonComponent::class) //defines the scope of those injections defined here
-class AppModule {
+class NetworkModule {
     //OkHttp - Loggers - Interceptors
     @Provides
     fun provideOkHttp(): OkHttpClient {

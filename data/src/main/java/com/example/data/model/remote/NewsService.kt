@@ -1,5 +1,9 @@
 package com.example.data.model.remote
 
+import com.example.data.model.remote.ApiDetails.AFRICANEWS
+import com.example.data.model.remote.ApiDetails.BBCNEWS
+import com.example.data.model.remote.ApiDetails.BUSINESSINSIDER
+import com.example.data.model.remote.ApiDetails.DONALDTRUMP
 import com.example.data.model.remote.africanews.AfricanNewsDataModel
 import com.example.data.model.remote.bbcnews.BBCNewsDataModel
 import com.example.data.model.remote.businessinsider.BusinessInsiderDataModel
@@ -12,39 +16,39 @@ interface NewsService {
 
 
     //All BBC News
-    @GET(ApiDetails.BASE_URL)
+    @GET(ApiDetails.END_POINT)
     suspend fun getAllBBCNews(
         @Query("q")
-        query: String = ApiDetails.BBCNEWS_ENDPOINT,
+        query: String = BBCNEWS,
         @Query("apiKey")
-        appid: String = ApiDetails.API_KEY
+        apiKey: String = ApiDetails.API_KEY
     ): Response<BBCNewsDataModel>
 
     //All News on Africa
-    @GET(ApiDetails.BASE_URL)
+    @GET(ApiDetails.END_POINT)
     suspend fun getAllAfricanNews(
         @Query("q")
-        query: String = ApiDetails.AFRICANEWS_ENDPOINT,
+        query: String = AFRICANEWS,
         @Query("apiKey")
-        appid: String = ApiDetails.API_KEY
+        apiKey: String = ApiDetails.API_KEY
     ): Response<AfricanNewsDataModel>
 
     //All Business Insider News
-    @GET(ApiDetails.BASE_URL)
+    @GET(ApiDetails.END_POINT)
     suspend fun getAllBusinessInsiderNews(
         @Query("q")
-        query: String = ApiDetails.BUSINESSINSIDER_ENDPOINT,
+        query: String = BUSINESSINSIDER,
         @Query("apiKey")
-        appid: String = ApiDetails.API_KEY
+        apiKey: String = ApiDetails.API_KEY
     ): Response<BusinessInsiderDataModel>
 
     //All Donald Trump News
-    @GET(ApiDetails.BASE_URL)
+    @GET(ApiDetails.END_POINT)
     suspend fun getAllDonaldTrumpNews(
         @Query("q")
-        query: String = ApiDetails.DONALDTRUMP_ENDPOINT,
+        query: String = DONALDTRUMP,
         @Query("apiKey")
-        appid: String = ApiDetails.API_KEY
+        apiKey: String = ApiDetails.API_KEY
     ): Response<DonaldTrumpDataModel>
 
 

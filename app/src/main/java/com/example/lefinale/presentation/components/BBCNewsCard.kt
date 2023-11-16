@@ -1,17 +1,12 @@
 package com.example.lefinale.presentation.components
 
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,43 +14,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.lefinale.R
 
 @Composable
-fun NewsCard(
-    imageUrl: Int, // Replace with actual image resource or URL
+fun BBCNewsCard(
+    imageUrl: String, // Replace with actual image resource or URL
     title: String,
     description: String,
     date: String,
-    source: String
+    source: String,
+    onClick: () -> Unit
 ) {
     val elevation = 8.dp
     val cardShape = RoundedCornerShape(corner = CornerSize(16.dp))
 
     Card(
+
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
             .shadow(elevation, cardShape)
             .clip(cardShape)
+            .clickable { onClick() }
+
+
     ) {
         Column {
             // Image on the left
-            Image(
-                painter = painterResource(id = imageUrl),
-                contentDescription = null,
+            AsyncImage(
+                model = imageUrl,
+                contentDescription = "Avatar Image",
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
+                    .clip(RectangleShape)
+//                    .height(120.dp)
+//                    .width(120.dp)
+                    .padding(8.dp)
+                    .fillMaxSize()
             )
+
 
             // Text components
             Column(
@@ -89,30 +90,31 @@ fun NewsCard(
             ) {
                 Text(
                     text = date,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onTertiary
                 )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = source,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Black,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.img_1), // Replace with actual source icon
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
 
-                Text(
-                    text = source,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Black
-                )
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NewsCardPreview() {
-
-    NewsCard(
-        imageUrl = R.drawable.img, // Replace with actual image resource or URL
-        title = "Breaking News",
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        date = "2 hours ago",
-        source = "News Source"
-    )
 }
 
